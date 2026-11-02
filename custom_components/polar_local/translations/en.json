@@ -24,9 +24,6 @@
       },
       "sound": {
         "name": "Sound"
-      },
-      "cooling": {
-        "name": "Cooling"
       }
     },
     "binary_sensor": {

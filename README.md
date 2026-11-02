@@ -133,7 +133,6 @@ Going back to the cloud: delete the DNS record and power-cycle the Polar.
 | Volume, Close delay, Ringer interval/duration, IR detection time | number (config) | written to the device |
 | Max. open duration | number (config) | used by the Lid switch, stored in Home Assistant |
 | Sound | switch (config) | |
-| Cooling | switch (config) | `coolSwitch`, assumed state – no effect on 3.0.14 |
 | Wi-Fi signal, Firmware, Last step, Last event code, Ringer mode, anti-pinch currents, door check times, Update progress, Last seen, Connected, Temperature check | diagnostic | |
 
 ## Actions
@@ -184,7 +183,7 @@ thaw), opens at the given time and keeps the lid open while the pet eats.
   provisioning service (`seq`/`type` framed messages with `wifiSsid`, password, MQTT config and
   `user_id`, no app-level encryption found) plus AP-mode and SmartConfig fallbacks; the
   message format still has to be decoded.
-* Cooling switch (`coolSwitch`) – verify on 3.0.18.
+* Cooling control: `coolSwitch` is accepted by 3.0.14 and 3.0.18 but has no effect (tested). Cooling always runs.
 
 ## Credits
 

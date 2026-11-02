@@ -52,7 +52,6 @@ class PolarHub:
         self.prefs: dict[str, Any] = {
             "irSensorIdenTimeout": DEFAULT_IR_TIMEOUT,
             "maxOpen": DEFAULT_MAX_OPEN,
-            "coolSwitch": True,
         }
         self._pending: dict[str, dict[str, Any]] = {}
 
@@ -207,9 +206,7 @@ class PolarHub:
             cmd["lightAgingType"] = 1
         if "soundSwitch" in fields:
             cmd["soundAgingType"] = 1
-        if "coolSwitch" in fields:
-            cmd["coolAgingType"] = 1
-        local = {k: v for k, v in fields.items() if k in ("irSensorIdenTimeout", "coolSwitch")}
+        local = {k: v for k, v in fields.items() if k == "irSensorIdenTimeout"}
         if local:
             self.prefs.update(local)
             self.state.update(local)

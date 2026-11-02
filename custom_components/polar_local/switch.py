@@ -1,4 +1,4 @@
-"""Switches: lid, sound, cooling."""
+"""Switches: lid, sound."""
 from __future__ import annotations
 
 from typing import Any
@@ -16,7 +16,6 @@ async def async_setup_entry(hass: HomeAssistant, entry, async_add_entities: AddE
     async_add_entities([
         LidSwitch(hub, "lid", entry.title),
         SoundSwitch(hub, "sound", entry.title),
-        CoolingSwitch(hub, "cooling", entry.title),
     ])
 
 
@@ -48,19 +47,3 @@ class SoundSwitch(PolarDeviceEntity, SwitchEntity):
     async def async_turn_off(self, **kwargs: Any) -> None:
         await self.hub.async_set_attr(soundSwitch=False)
 
-
-class CoolingSwitch(PolarDeviceEntity, SwitchEntity):
-    """coolSwitch – the device does not report it back, so the state is assumed."""
-
-    _attr_entity_category = EntityCategory.CONFIG
-    _attr_assumed_state = True
-
-    @property
-    def is_on(self) -> bool:
-        return bool(self.hub.prefs.get("coolSwitch", True))
-
-    async def async_turn_on(self, **kwargs: Any) -> None:
-        await self.hub.async_set_attr(coolSwitch=True)
-
-    async def async_turn_off(self, **kwargs: Any) -> None:
-        await self.hub.async_set_attr(coolSwitch=False)

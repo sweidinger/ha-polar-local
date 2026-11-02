@@ -149,7 +149,7 @@ Toggles with a time window (`*AgingType`, `*StartTimeUtc`, `*EndTimeUtc`, `*Time
 | `temperatureCheckSwitch` | bool | ✅ | ✅ | |
 | `doorCheckSignalTime`, `doorNotcheckSignalTime` | s | ✅ | ✅ | |
 | `doorStuckCurrent`, `plateStuckCurrent` | mA (400) | ✅ | ✅ | **anti-pinch thresholds – do not change** |
-| `coolSwitch` (+`coolAgingType`, `coolStartTimeUtc`, `coolEndTimeUtc`, `coolTimes`) | bool | ❌ | see README | not reported back; 3.0.14 accepts it without effect |
+| `coolSwitch` (+`coolAgingType`, `coolStartTimeUtc`, `coolEndTimeUtc`, `coolTimes`) | bool | ❌ | ❌ | accepted (`code: 0`) but without effect on both versions (temperature and cooling rotation unchanged for 45–90 min); not reported back |
 | `enableLight`, `enableSound`, `powerType`, `powerMode`, `electricQuantity`, `wifiSsid` | read-only | ✅ | ✅ | `electricQuantity` = AA battery level (meaningless without batteries) |
 
 ## Behaviour worth knowing
