@@ -1,0 +1,203 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "PETLIBRO Polar (lokal)",
+        "description": "Seriennummer des Polar (Petlibro-App → Geräteinfo oder MQTT-Topic dl/PLAF109/<Seriennummer>/…). Der Polar muss den MQTT-Broker von Home Assistant erreichen, siehe README.",
+        "data": {
+          "serial": "Seriennummer",
+          "name": "Name"
+        }
+      }
+    },
+    "error": {
+      "invalid_serial": "Ungültige Seriennummer (8–32 Buchstaben/Ziffern)."
+    },
+    "abort": {
+      "already_configured": "Dieser Polar ist bereits eingerichtet."
+    }
+  },
+  "entity": {
+    "switch": {
+      "lid": {
+        "name": "Klappe"
+      },
+      "sound": {
+        "name": "Ton"
+      },
+      "cooling": {
+        "name": "Kühlung"
+      }
+    },
+    "binary_sensor": {
+      "lid_open": {
+        "name": "Klappe offen"
+      },
+      "pet_near": {
+        "name": "Katze am Napf"
+      },
+      "temperature_check": {
+        "name": "Temperaturprüfung"
+      },
+      "online": {
+        "name": "Verbunden"
+      }
+    },
+    "select": {
+      "plate": {
+        "name": "Tellerposition",
+        "state": {
+          "plate_1": "Teller 1",
+          "plate_2": "Teller 2",
+          "plate_3": "Teller 3"
+        }
+      }
+    },
+    "button": {
+      "bell": {
+        "name": "Glocke"
+      },
+      "refresh": {
+        "name": "Status abfragen"
+      }
+    },
+    "light": {
+      "indicator": {
+        "name": "Anzeige-LED"
+      }
+    },
+    "number": {
+      "volume": {
+        "name": "Lautstärke"
+      },
+      "close_delay": {
+        "name": "Schließverzögerung"
+      },
+      "ringer_interval": {
+        "name": "Klingel-Intervall"
+      },
+      "ringer_duration": {
+        "name": "Klingel-Dauer"
+      },
+      "ir_timeout": {
+        "name": "IR-Erkennungszeit"
+      },
+      "max_open": {
+        "name": "Max. Öffnungsdauer"
+      }
+    },
+    "sensor": {
+      "temperature": {
+        "name": "Temperatur"
+      },
+      "rssi": {
+        "name": "WLAN-Signal"
+      },
+      "last_step": {
+        "name": "Letzter Schritt"
+      },
+      "event_code": {
+        "name": "Letzter Ereigniscode"
+      },
+      "firmware": {
+        "name": "Firmware"
+      },
+      "ringer_mode": {
+        "name": "Klingel-Modus"
+      },
+      "door_stuck_current": {
+        "name": "Klemmschutz Klappe"
+      },
+      "plate_stuck_current": {
+        "name": "Klemmschutz Teller"
+      },
+      "door_check_time": {
+        "name": "Tür-Prüfzeit"
+      },
+      "door_nocheck_time": {
+        "name": "Tür-Prüfzeit ohne Signal"
+      },
+      "ota_progress": {
+        "name": "Update-Fortschritt"
+      },
+      "last_seen": {
+        "name": "Zuletzt gesehen"
+      },
+      "next_plan": {
+        "name": "Nächste Fütterung"
+      }
+    }
+  },
+  "services": {
+    "set_plans": {
+      "name": "Fütterungspläne setzen",
+      "description": "Ersetzt alle Pläne im Polar. Jeder Plan dreht den Teller 30 Min vorher nach vorne (Auftauen) und öffnet die Klappe zur angegebenen Zeit.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Anzusprechender Polar (nur bei mehreren nötig)."
+        },
+        "plans": {
+          "name": "Pläne",
+          "description": "Liste aus {plate: 1-3, time: 'HH:MM', date: optional 'JJJJ-MM-TT', duration: Minuten, need_thaw: optional true/false}. Ohne Datum gilt der nächste Termin."
+        }
+      }
+    },
+    "clear_plans": {
+      "name": "Fütterungspläne löschen",
+      "description": "Entfernt alle Pläne aus dem Polar.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Anzusprechender Polar."
+        }
+      }
+    },
+    "feed_now": {
+      "name": "Jetzt füttern",
+      "description": "Öffnet die Klappe sofort.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Anzusprechender Polar."
+        },
+        "plate": {
+          "name": "Teller",
+          "description": "Teller 1-3 (Standard: aktueller)."
+        },
+        "duration": {
+          "name": "Dauer",
+          "description": "Minuten (Standard: max. Öffnungsdauer)."
+        }
+      }
+    },
+    "stop_feeding": {
+      "name": "Fütterung beenden",
+      "description": "Schließt die Klappe.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Anzusprechender Polar."
+        }
+      }
+    },
+    "send_command": {
+      "name": "Rohbefehl senden",
+      "description": "Sendet einen JSON-Rohbefehl an den Polar (für Experimente, siehe docs/API.md).",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Anzusprechender Polar."
+        },
+        "topic": {
+          "name": "Topic",
+          "description": "Unter-Topic: service, config, ota, event oder ntp."
+        },
+        "payload": {
+          "name": "Payload",
+          "description": "JSON-Objekt mit mindestens 'cmd'."
+        }
+      }
+    }
+  }
+}

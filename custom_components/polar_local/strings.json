@@ -1,0 +1,203 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "PETLIBRO Polar (local)",
+        "description": "Serial number of the Polar (Petlibro app → device info, or the MQTT topic dl/PLAF109/<serial>/…). The device must reach Home Assistant's MQTT broker, see the README.",
+        "data": {
+          "serial": "Serial number",
+          "name": "Name"
+        }
+      }
+    },
+    "error": {
+      "invalid_serial": "Invalid serial number (8–32 letters/digits)."
+    },
+    "abort": {
+      "already_configured": "This Polar is already configured."
+    }
+  },
+  "entity": {
+    "switch": {
+      "lid": {
+        "name": "Lid"
+      },
+      "sound": {
+        "name": "Sound"
+      },
+      "cooling": {
+        "name": "Cooling"
+      }
+    },
+    "binary_sensor": {
+      "lid_open": {
+        "name": "Lid open"
+      },
+      "pet_near": {
+        "name": "Pet at bowl"
+      },
+      "temperature_check": {
+        "name": "Temperature check"
+      },
+      "online": {
+        "name": "Connected"
+      }
+    },
+    "select": {
+      "plate": {
+        "name": "Plate position",
+        "state": {
+          "plate_1": "Plate 1",
+          "plate_2": "Plate 2",
+          "plate_3": "Plate 3"
+        }
+      }
+    },
+    "button": {
+      "bell": {
+        "name": "Bell"
+      },
+      "refresh": {
+        "name": "Query status"
+      }
+    },
+    "light": {
+      "indicator": {
+        "name": "Indicator LED"
+      }
+    },
+    "number": {
+      "volume": {
+        "name": "Volume"
+      },
+      "close_delay": {
+        "name": "Close delay"
+      },
+      "ringer_interval": {
+        "name": "Ringer interval"
+      },
+      "ringer_duration": {
+        "name": "Ringer duration"
+      },
+      "ir_timeout": {
+        "name": "IR detection time"
+      },
+      "max_open": {
+        "name": "Max. open duration"
+      }
+    },
+    "sensor": {
+      "temperature": {
+        "name": "Temperature"
+      },
+      "rssi": {
+        "name": "Wi-Fi signal"
+      },
+      "last_step": {
+        "name": "Last step"
+      },
+      "event_code": {
+        "name": "Last event code"
+      },
+      "firmware": {
+        "name": "Firmware"
+      },
+      "ringer_mode": {
+        "name": "Ringer mode"
+      },
+      "door_stuck_current": {
+        "name": "Lid anti-pinch current"
+      },
+      "plate_stuck_current": {
+        "name": "Plate anti-pinch current"
+      },
+      "door_check_time": {
+        "name": "Door check time"
+      },
+      "door_nocheck_time": {
+        "name": "Door check time without signal"
+      },
+      "ota_progress": {
+        "name": "Update progress"
+      },
+      "last_seen": {
+        "name": "Last seen"
+      },
+      "next_plan": {
+        "name": "Next feeding"
+      }
+    }
+  },
+  "services": {
+    "set_plans": {
+      "name": "Set feeding plans",
+      "description": "Replaces all plans on the Polar. Each plan rotates the plate to the front 30 min before (thaw) and opens the lid at the given time.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Polar to address (only needed with several)."
+        },
+        "plans": {
+          "name": "Plans",
+          "description": "List of {plate: 1-3, time: 'HH:MM', date: optional 'YYYY-MM-DD', duration: minutes, need_thaw: optional bool}. Without date the next occurrence is used."
+        }
+      }
+    },
+    "clear_plans": {
+      "name": "Clear feeding plans",
+      "description": "Removes all plans from the Polar.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Polar to address."
+        }
+      }
+    },
+    "feed_now": {
+      "name": "Feed now",
+      "description": "Opens the lid immediately.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Polar to address."
+        },
+        "plate": {
+          "name": "Plate",
+          "description": "Plate 1-3 (default: current)."
+        },
+        "duration": {
+          "name": "Duration",
+          "description": "Minutes (default: max. open duration)."
+        }
+      }
+    },
+    "stop_feeding": {
+      "name": "Stop feeding",
+      "description": "Closes the lid.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Polar to address."
+        }
+      }
+    },
+    "send_command": {
+      "name": "Send raw command",
+      "description": "Sends a raw JSON command to the Polar (for experiments, see docs/API.md).",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Polar to address."
+        },
+        "topic": {
+          "name": "Topic",
+          "description": "Sub-topic: service, config, ota, event or ntp."
+        },
+        "payload": {
+          "name": "Payload",
+          "description": "JSON object with at least 'cmd'."
+        }
+      }
+    }
+  }
+}
