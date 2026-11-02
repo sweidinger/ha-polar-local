@@ -163,6 +163,12 @@ Toggles with a time window (`*AgingType`, `*StartTimeUtc`, `*EndTimeUtc`, `*Time
   press, `UNBIND`, or NTP reply `code: 2030`) → it stops cooling and blinks white.
   It also stops cooling on battery power.
 * **Plans live on the device** (NVS) and run without any broker connection.
+* **`coolSwitch` is inert** (confirmed by static analysis of the 3.0.18 image, see
+  [cooling-analysis.md](cooling-analysis.md)). The cooling controller decides on/off from an
+  internal enable-flag that only its own thaw scheduler and 24-hour "cooling-abnormal"
+  state machine write — plus the battery and binding gates above. The `coolSwitch`/`cool*`
+  settings parsed from `ATTR_SET_SERVICE` are stored but never reach that controller, so you
+  cannot turn cooling off over MQTT on either firmware.
 
 ## Firmware update
 
